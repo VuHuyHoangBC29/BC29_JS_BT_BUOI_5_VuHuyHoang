@@ -49,5 +49,65 @@ document.getElementById("btnDiem").onclick = function () {
 }
 
 /**Bài 2: 
- * 
+ * - Đầu vào: Nhập họ tên và số kw.
+ * - Xử lý:
+ *      + Từ 1kw -> 50kw: 500d/kw.
+ *      + Từ 51kw -> 100kw: 650d/kw.
+ *      + Từ 101kw -> 200kw: 850d/kw.
+ *      + Từ 201kw -> 350kw: 1100d/kw.
+ *      + Từ 351kw trở lên: 1300d/kw.
+ * - Đầu ra: show kết quả tiền điện.
  */
+const KW1 = 500;
+const KW2 = 650;
+const KW3 = 850;
+const KW4 = 1100;
+const KW5 = 1300;
+
+var tienKW1 = 0;
+var tienKW2 = 0;
+var tienKW3 = 0;
+var tienKW4 = 0;
+var tienKW5 = 0;
+var tongTien = 0;
+
+function tinhTienDienChiTiet(soKW, KW1, KW2, KW3, KW4, KW5) {
+    if (0 < soKW && soKW <= 50) {
+        tienKW1 = soKW * KW1;
+        tongTien = tienKW1
+    } else if (soKW > 50 && soKW <= 100) {
+        tienKW1 = 50 * KW1;
+        tienKW2 = (soKW - 50) * KW2;
+        tongTien = tienKW1 + tienKW2;
+    } else if (soKW > 100 && soKW <= 200) {
+        tienKW1 = 50 * KW1;
+        tienKW2 = (100 - 50) * KW2;
+        tienKW3 = (soKW - 100) * KW3;
+        tongTien = tienKW1 + tienKW2 + tienKW3;
+    } else if (soKW > 200 && soKW <= 350) {
+        tienKW1 = 50 * KW1;
+        tienKW2 = (100 - 50) * KW2;
+        tienKW3 = (200 - 100) * KW3;
+        tienKW4 = (soKW - 200) * KW4;
+        tongTien = tienKW1 + tienKW2 + tienKW3 + tienKW4;
+    } else if (soKW > 350) {
+        tienKW1 = 50 * KW1;
+        tienKW2 = (100 - 50) * KW2;
+        tienKW3 = (200 - 100) * KW3;
+        tienKW4 = (350 - 200) * KW4;
+        tienKW5 = (soKW - 350) * KW5;
+        tongTien = tienKW1 + tienKW2 + tienKW3 + tienKW4 + tienKW5;
+    }
+    return tongTien;
+}
+
+document.getElementById("btnTienDien").onclick = function () {
+    var hoTen = getEle("hoTen").value;
+    var soKW = getEle("soKW").value;
+    var tongTienDien = 0;
+
+    tongTienDien = tinhTienDienChiTiet(soKW, KW1, KW2, KW3, KW4, KW5);
+    var currentFormat = new Intl.NumberFormat("vn-VN");
+    tongTienDien = currentFormat.format(tongTienDien);
+    getEle("footerBai2").innerHTML = "Họ tên: " + hoTen + "; Tiền điện: " + tongTienDien;
+}
